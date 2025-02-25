@@ -98,15 +98,15 @@ I would like to thank Pratham Bhashyakarla, CWRU Department of Physics, for his 
         \hline
     \end{tabular}
     \caption{Fixed voltage at $V=104\pm1 V$, with steps of voltage from a minimum Amps of $0.66 A$ and a maximum of $1.91 A$. Trevor's and Pratham's D refers to their measured diameter values, respectively. Average radius is calculated by taking the average of the two measured values from me and Pratham, dividing the value by 2 (diameter $\to$ radius), and then converting that average radius value to meters. Uncertainty of these values is discussed in the following section.}
-    \label{t_FixV}
+    \label{t:FixV}
 \end{table}
 
 \begin{figure} [h]
     \begin{subfigure}
         \centering
         \includegraphics[width=0.7\textwidth]{figures/EOM_Fix_Voltage.png}
-        \caption{Inverse of radius $\frac{1}{R}$ vs. applied current $A$. 1/R is calculated as 1 over the Average Radius values reported in Table \ref{t_FixV}.}
-        \label{p_FixV}
+        \caption{Inverse of radius $\frac{1}{R}$ vs. applied current $A$. 1/R is calculated as 1 over the Average Radius values reported in Table \ref{t:FixV}.}
+        \label{f:FixV}
     \end{subfigure}
 \end{figure}
 
@@ -127,8 +127,8 @@ I would like to thank Pratham Bhashyakarla, CWRU Department of Physics, for his 
         197 & 15.8 $\pm$ 0.1 & 15.5 $\pm$ 0.1 & 7.825E-4 $\pm$ 3.5E-6 \\
         \hline
     \end{tabular}
-    \caption{Fixed Amps at $A = 1.02\pm0.01 A$, with steps of voltage from a minimum Voltage of $84V$ and a maximum of $197V$. Trevor's and Pratham's D refers to their measured diameter values, respectively. The Average Radius Values and Uncertainties here are identical to the values calculated Table \ref{t_FixV}. See the next section for uncertainty discussions.}
-    \label{t_FixA}
+    \caption{Fixed Amps at $A = 1.02\pm0.01 A$, with steps of voltage from a minimum Voltage of $84V$ and a maximum of $197V$. Trevor's and Pratham's D refers to their measured diameter values, respectively. The Average Radius Values and Uncertainties here are identical to the values calculated Table \ref{t:FixV}. See the next section for uncertainty discussions.}
+    \label{t:FixA}
 \end{table}
 
 \begin{figure} [h]
@@ -136,7 +136,7 @@ I would like to thank Pratham Bhashyakarla, CWRU Department of Physics, for his 
         \centering
         \includegraphics[width=0.7\textwidth]{figures/EOM_Fix_Amps.png}
         \caption{Radius $R$ vs. applied beam voltage $V$}
-        \label{p_FixA}
+        \label{f:FixA}
     \end{subfigure}
 \end{figure}
 
@@ -145,35 +145,49 @@ I would like to thank Pratham Bhashyakarla, CWRU Department of Physics, for his 
 \section{Other Calculations}
 \subsection{Average Radius Error Propagation} \label{sec:RadiusErr}
 
+\begin{align}
+	\bar{R} =& \frac{1}{2}\cdot\frac{D_T + D_P}{2}\cdot\frac{1 m}{100 cm} = \frac{1}{400}\cdot(D_T + D_P)\ m \label{e:R_calculation} 	
+\end{align}
+
+$D_T$ and $D_P$ refer to diameter measurements taken by Trevor and Pratham, respectively.
+
+\begin{align}
+	\delta_{\bar{R}} =& \sqrt{\delta_{\bar{R}_{D_T}}^2 + \delta_{\bar{R}_{D_P}}^2} && \text{errors present only in }D_T \text{ and }D_P \label{e:R_bar_err_exp}
+\end{align}
+
+\begin{align}
+	\delta_{\bar{R}_{D_T}} =& \left( \frac{\partial \bar{R}}{\partial D_T} \right)\cdot\delta_{D_T} = \frac{1}{400}\cdot\delta_{D_T} && \text{use }\delta_{D_T}=0.001\text{ m -- from measurements} \label{e:R_err_Dt} \\
+	=& \frac{1}{400}\cdot0.001=2.5\times10^{-6} m \notag
+\end{align}
+
+\begin{align}
+	\delta_{\bar{R}_{D_T}} =& \left( \frac{\partial \bar{R}}{\partial D_P} \right)\cdot\delta_{D_P} = \frac{1}{400}\cdot\delta_{D_P} && \text{use }\delta_{D_P}=0.001\text{ m -- from measurements} \label{e:R_err_Dp} \\
+	=& \frac{1}{400}\cdot0.001=2.5\times10^{-6} m \notag
+\end{align}
+
 \begin{align*}
-	\bar{R} =& \frac{1}{2}\cdot\frac{D_T + D_P}{2}\cdot\frac{1 m}{100 cm} = \frac{1}{400}\cdot(D_T + D_P)\ m && \text{for diameter measurements }D_T \text{ and }D_P \\
-	\delta_{\bar{R}} =& \sqrt{\delta_{\bar{R}_{D_T}}^2 + \delta_{\bar{R}_{D_P}}^2} && \text{errors present only in }D_T \text{ and }D_P \\
-	\delta_{\bar{R}_{D_T}} =& \left( \frac{\partial \bar{R}}{\partial D_T} \right)\cdot\delta_{D_T} = \frac{1}{400}\cdot\delta_{D_T} && \text{use }\delta_{D_T}=0.001\text{ m -- from measurements} \\
-	=& \frac{1}{400}\cdot0.001=2.5\times10^{-6} m \\
-	\delta_{\bar{R}_{D_T}} =& \left( \frac{\partial \bar{R}}{\partial D_P} \right)\cdot\delta_{D_P} = \frac{1}{400}\cdot\delta_{D_P} && \text{use }\delta_{D_P}=0.001\text{ m -- from measurements} \\
-	=& \frac{1}{400}\cdot0.001=2.5\times10^{-6} m \\
-	\therefore \delta_{\bar{R}} =& \sqrt{(2.5\times10^{-6}m)^2+ (2.5\times10^{-6}m)^2} = 3.5\times10^{-6} m
+	\therefore \delta_{\bar{R}} =& \sqrt{(2.5\times10^{-6}m)^2+ (2.5\times10^{-6}m)^2} = 3.5\times10^{-6} m 
 \end{align*}
 
 \begin{equation}
 	\delta_{\bar{R}} = 3.5\times10^{-6} m
-	\label{R_bar_err}
+	\label{v:R_bar_err}
 \end{equation}
 
 \subsection{Error Propagation in 1/R} \label{sec:InvRadiusError}
 
-\begin{align*}
-	\frac{1}{\bar{R}}=& \frac{1}{R} && \text{Used for determining }\alpha \\
-	\delta_{\frac{1}{\bar{R}}} =& \delta_{\frac{1}{\bar{R}}_{\bar{R}}} && \text{No need for adding in quadrature, only once source of error} \\
-	\delta_{\frac{1}{\bar{R}}_{\bar{R}}} =& \abs{\paren{\frac{\partial \frac{1}{\bar{R}}}{\partial \bar{R}}}\cdot\delta_{\bar{R}}} && \text{Derivative method for error propagation} \\
-	=& \frac{\delta_{\bar{R}}}{\bar{R}^2} && \text{Simple single-variable derivative}
-\end{align*}
+\begin{align}
+	\frac{1}{\bar{R}}=& \frac{1}{R} && \text{Used for determining }\alpha \notag \\
+	\delta_{\frac{1}{\bar{R}}} =& \delta_{\frac{1}{\bar{R}}_{\bar{R}}} && \text{No need for adding in quadrature, only once source of error} \notag \\
+	\delta_{\frac{1}{\bar{R}}_{\bar{R}}} =& \abs{\paren{\frac{\partial \frac{1}{\bar{R}}}{\partial \bar{R}}}\cdot\delta_{\bar{R}}} && \text{Derivative method for error propagation} \label{e:R_inv_err} \\
+	=& \frac{\delta_{\bar{R}}}{\bar{R}^2} && \text{Simple single-variable derivative} \notag
+\end{align}
 
-This expression was used in determining the errors presented in Table \ref{t_FixV}, but calculations are omitted here to prevent redundancy. To calculate, use $\delta_{\bar{R}}=3.5\times10^{-6} m$, as calculated in the above subsection.
+This expression was used in determining the errors presented in Table \ref{t:FixV}, but calculations are omitted here to prevent redundancy. To calculate, use $\delta_{\bar{R}}=3.5\times10^{-6} m$, as calculated in the above subsection.
 
 \begin{equation}
 	\delta_{\frac{1}{\bar{R}}}=\frac{\delta_{\bar{R}}}{\bar{R}^2}
-	\label{R_bar_inverse_err}
+	\label{e:R_bar_inverse_err}
 \end{equation}
 
 \clearpage
@@ -185,49 +199,85 @@ This expression was used in determining the errors presented in Table \ref{t_Fix
 	\quad \Rightarrow \quad
 	\frac{e}{m}=\paren{\frac{5r\alpha}{8\mu_0N}}^2\cdot(10V)
 	\quad \text{Errors propagated in }\alpha, V, r 
-	\label{em_derive_FixV}
+	\label{e:em_derive_FixV}
 \end{equation}
 
-\begin{align*}
-	\delta_\frac{e}{m}=&\sqrt{\paren{\delta_{\frac{e}{m}_\alpha}}^2+\paren{\delta_{\frac{e}{m}_V}}^2+\paren{\delta_{\frac{e}{m}_r}}^2} && \text{General Error Equation} \\ \\
-	\delta_{\frac{e}{m}_\alpha} = \paren{\frac{\partial \frac{e}{m}}{\partial \alpha}}\cdot\delta_\alpha =& \paren{20\paren{\frac{5}{8\mu_0N}}^2(r\alpha^2)V}\cdot\delta_\alpha && \text{Error due to }\alpha \\
-	=& \paren{20\paren{\frac{5}{8\cdot4\pi\times10^{-7}\cdot130}}^2(0.158\cdot1199^2)\cdot104}\cdot167 \\
-	=& 1.15\times10^{18} \frac{C}{Kg} \\ \\
-	\delta_{\frac{e}{m}_V} = \paren{\frac{\partial \frac{e}{m}}{\partial V}}\cdot\delta_V =& \paren{10\paren{\frac{5}{8\mu_0N}}^2(r^2\alpha^2)}\cdot \delta_V && \text{Error due to }V \\
-	=& \paren{10\paren{\frac{5}{8\cdot4\pi\times10^{-7}\cdot130}}^2(0.158^2\cdot1199^2)}\cdot1 \\
-	=& 5.25\times10^{12} \frac{C}{Kg} \\ \\
-	\delta_{\frac{e}{m}_r} = \paren{\frac{\partial \frac{e}{m}}{\partial r}}\cdot\delta_r =& \paren{20\paren{\frac{5}{8\mu_0N}}^2(r^2\alpha)V}\cdot \delta_r && \text{Error due to }r \\
-	=& \paren{20\paren{\frac{5}{8\cdot4\pi\times10^{-7}\cdot130}}^2(0.158^2\cdot1199)\cdot104}\cdot0.005 \\
-	=& 4.38\times10^7 \frac{C}{Kg} \\ \\
-	\delta_\frac{e}{m} =& \sqrt{(1.15\times10^{18})^2+(5.25\times10^{12})^2+(4.38\times10^7)^2} && \text{Substitute Values}\\
-	=& 1.15\times10^{18} \frac{C}{Kg}
-\end{align*}
+\begin{align}
+	\delta_\frac{e}{m}=\sqrt{\paren{\delta_{\frac{e}{m}_\alpha}}^2+\paren{\delta_{\frac{e}{m}_V}}^2+\paren{\delta_{\frac{e}{m}_r}}^2} \qquad \text{General Error Equation} \label{e:FixV_err}
+\end{align}
+
+Calculate the error in $\frac{e}{m}$ due to $\alpha$ as:
+
+\begin{align}
+	\delta_{\frac{e}{m}_\alpha} = \paren{\frac{\partial \frac{e}{m}}{\partial \alpha}}\cdot\delta_\alpha =& \paren{20\paren{\frac{5}{8\mu_0N}}^2(r\alpha^2)V}\cdot\delta_\alpha \label{e:FixV_err_alpha} \\
+	=& \paren{20\paren{\frac{5}{8\cdot4\pi\times10^{-7}\cdot130}}^2(0.158\cdot1199^2)\cdot104}\cdot167 \notag \\
+	=& 1.15\times10^{18} \frac{C}{Kg} \notag
+\end{align}
+
+Calculate the error in $\frac{e}{m}$ due to $V$ as:
+
+\begin{align}
+	\delta_{\frac{e}{m}_V} = \paren{\frac{\partial \frac{e}{m}}{\partial V}}\cdot\delta_V =& \paren{10\paren{\frac{5}{8\mu_0N}}^2(r^2\alpha^2)}\cdot \delta_V \label{e:FixV_err_V} \\
+	=& \paren{10\paren{\frac{5}{8\cdot4\pi\times10^{-7}\cdot130}}^2(0.158^2\cdot1199^2)}\cdot1 \notag \\
+	=& 5.25\times10^{12} \frac{C}{Kg} \notag
+\end{align}
+
+Calculate the error in $\frac{e}{m}$ due to $r$ as:
+
+\begin{align}
+	\delta_{\frac{e}{m}_r} = \paren{\frac{\partial \frac{e}{m}}{\partial r}}\cdot\delta_r =& \paren{20\paren{\frac{5}{8\mu_0N}}^2(r^2\alpha)V}\cdot \delta_r \label{e:Fix_err_r} \\
+	=& \paren{20\paren{\frac{5}{8\cdot4\pi\times10^{-7}\cdot130}}^2(0.158^2\cdot1199)\cdot104}\cdot0.005 \notag \\
+	=& 4.38\times10^7 \frac{C}{Kg} \notag
+\end{align}
+
+\begin{align}
+	\delta_\frac{e}{m} =& \sqrt{(1.15\times10^{18})^2+(5.25\times10^{12})^2+(4.38\times10^7)^2} && \text{Substitute Values} \notag \\
+	=& 1.15\times10^{18} \frac{C}{Kg} \label{v:FixV_err}
+\end{align}
 
 \clearpage
 
 \subsection{Beam Voltage Error Propagation - Fixed Amps} \label{sec:FixedAmpsErr}
 
-\begin{equation}
+\begin{align}
 	\beta = \frac{5r}{8\mu_0N I_c}\sqrt{\frac{10}{e/m}}
 	\quad \Rightarrow \quad
 	\frac{e}{m}=10\paren{\frac{8\mu_0N I_C\beta}{5r}}^{-2}
 	\quad \text{Errors propagated in }\beta, I_c, r
-	\label{em_derive_FixA}
-\end{equation}
+	\label{e:em_derive_FixA}
+\end{align}
 
-\begin{align*}
-	\delta_\frac{e}{m}=&\sqrt{\paren{\delta_{\frac{e}{m}_\beta}}^2+\paren{\delta_{\frac{e}{m}_{I_c}}}^2+\paren{\delta_{\frac{e}{m}_r}}^2} \\ \\
-	\delta_{\frac{e}{m}_\beta} = \abs{\paren{\frac{\partial \frac{e}{m}}{\partial \beta}}\cdot\delta_\beta} =& \paren{\paren{\frac{8\mu_0N}{5}}^{-2}\cdot\paren{\frac{20r^2}{\beta^3I_c^2}}}\cdot\delta_\beta \\
-	=& \paren{\paren{\frac{8\cdot4\pi\times10^{-7}*130}{5}}^{-2}\cdot\paren{\frac{20(0.158)^2}{(5.6\times10^{-5})^3(1.02)^2}}}\cdot(5.4\times10^{-6}) \\
-	=& 2.16\times10^{14} \frac{C}{Kg} \\ \\
-	\delta_{\frac{e}{m}_{I_c}} = \abs{\paren{\frac{\partial \frac{e}{m}}{\partial I_c}}\cdot\delta_{I_c}} =& \paren{\paren{\frac{8\mu_0N}{5}}^{-2}\cdot\paren{\frac{20r^2}{\beta^2I_c^3}}}\cdot \delta_{I_c} \\
-	=& \paren{\paren{\frac{8\cdot4\pi\times10^{-7}*130}{5}}^{-2}\cdot\paren{\frac{20(0.158)^2}{(5.6\times10^{-5})^2(1.02)^3}}}\cdot0.01\\
-	=& 2.20\times10^{13} \frac{C}{Kg} \\ \\
-	\delta_{\frac{e}{m}_r} = \abs{\paren{\frac{\partial \frac{e}{m}}{\partial r}}\cdot\delta_r} =& \paren{\paren{\frac{8\mu_0N}{5}}^{-2}\cdot\paren{\frac{20r}{\beta^2I_c^2}}}\cdot \delta_r \\
-	=& \paren{\paren{\frac{8\cdot4\pi\times10^{-7}*130}{5}}^{-2}\cdot\paren{\frac{20(0.158)}{(5.6\times10^{-5})^2(1.02)^2}}}\cdot0.005 \\
-	=& 1.42\times10^{14} \frac{C}{Kg} \\ \\
-	\delta_\frac{e}{m} =& \sqrt{(2.16\times10^{14})^2+(2.20\times10^{13})^2+(1.42\times10^{14})^2} \\
-	=& 2.59\times10^{14} \frac{C}{Kg}
-\end{align*}
+\begin{align}
+	\delta_\frac{e}{m}=&\sqrt{\paren{\delta_{\frac{e}{m}_\beta}}^2+\paren{\delta_{\frac{e}{m}_{I_c}}}^2+\paren{\delta_{\frac{e}{m}_r}}^2} \qquad \text{General Error Equation} \label{e:FixA_err}
+\end{align}
+
+Calculate the error in $\frac{e}{m}$ due to $\beta$ as:
+
+\begin{align}
+	\delta_{\frac{e}{m}_\beta} = \abs{\paren{\frac{\partial \frac{e}{m}}{\partial \beta}}\cdot\delta_\beta} =& \paren{\paren{\frac{8\mu_0N}{5}}^{-2}\cdot\paren{\frac{20r^2}{\beta^3I_c^2}}}\cdot\delta_\beta \label{e:FixA_err_beta} \\
+	=& \paren{\paren{\frac{8\cdot4\pi\times10^{-7}*130}{5}}^{-2}\cdot\paren{\frac{20(0.158)^2}{(5.6\times10^{-5})^3(1.02)^2}}}\cdot(5.4\times10^{-6}) \notag \\
+	=& 2.16\times10^{14} \frac{C}{Kg} \notag
+\end{align}
+
+Calculate the error in $\frac{e}{m}$ due to $I_c$ as:
+
+\begin{align}
+	\delta_{\frac{e}{m}_{I_c}} = \abs{\paren{\frac{\partial \frac{e}{m}}{\partial I_c}}\cdot\delta_{I_c}} =& \paren{\paren{\frac{8\mu_0N}{5}}^{-2}\cdot\paren{\frac{20r^2}{\beta^2I_c^3}}}\cdot \delta_{I_c} \label{e:FixA_err_Ic} \\
+	=& \paren{\paren{\frac{8\cdot4\pi\times10^{-7}*130}{5}}^{-2}\cdot\paren{\frac{20(0.158)^2}{(5.6\times10^{-5})^2(1.02)^3}}}\cdot0.01 \notag \\
+	=& 2.20\times10^{13} \frac{C}{Kg} \notag
+\end{align}
+
+Calculate the error in $\frac{e}{m}$ due to $r$ as:
+
+\begin{align}
+	\delta_{\frac{e}{m}_r} = \abs{\paren{\frac{\partial \frac{e}{m}}{\partial r}}\cdot\delta_r} =& \paren{\paren{\frac{8\mu_0N}{5}}^{-2}\cdot\paren{\frac{20r}{\beta^2I_c^2}}}\cdot \delta_r \label{e:FixA_err_r} \\
+	=& \paren{\paren{\frac{8\cdot4\pi\times10^{-7}*130}{5}}^{-2}\cdot\paren{\frac{20(0.158)}{(5.6\times10^{-5})^2(1.02)^2}}}\cdot0.005 \notag \\
+	=& 1.42\times10^{14} \frac{C}{Kg} \notag
+\end{align}
+
+\begin{align}
+	\delta_\frac{e}{m} =& \sqrt{(2.16\times10^{14})^2+(2.20\times10^{13})^2+(1.42\times10^{14})^2} && \text{Substitute Values} \notag \\
+	=& 2.59\times10^{14} \frac{C}{Kg} \label{v:FixA_err}
+\end{align}
 
 \end{document}
