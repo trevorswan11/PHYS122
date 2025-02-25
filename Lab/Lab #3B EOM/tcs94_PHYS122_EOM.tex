@@ -56,11 +56,102 @@ Cleveland, OH 44016-7079}
 
 % Introduction and Thoery
 \section{Introduction and Theory}
-\lipsum[2]
+An electron moving with a given velocity $\vec{v}$ in an applied magnetic field $\vec{B}$ is influenced by a force know as the Lorentz force, given by
+
+\begin{equation}
+	\vec{F} = -e\paren{\vec{v}\times\vec{B}} \label{e:Lorentz}
+\end{equation}
+
+Due to the nature of this electric force, whose magnitude is $evB$, the electron travels along a circular path with a radius $R$. As the Lorentz for acts centripetally, the acceleration of the electron is $\frac{v^2}{R}$. Thus, we can apply Newton's Second Law and some basic algebraic manipulations to yield the expression
+
+\begin{equation}
+	evB=\frac{mv^2}{R}\rightarrow \frac{e}{m}=\frac{2V}{(BR)^2}
+	\label{e:N2L_e_over_m}
+\end{equation}
+
+According to CODATA's recommended value~(\ref{ref:MANUEL}), we expect to measure a value for $\frac{e}{m}$ close to
+
+\begin{equation*}
+	\frac{e}{m}=(1.75882017\pm0.00000007)\times10^{11} \frac{C}{Kg}
+\end{equation*} 
+
+As explained in the following section, this experiment makes use of a Helmholtz coil that provides a uniform magnetic field perpendicular to the electron beam, inline with the conditions for the previous derivations. The field at the center of this field is given by the equation
+
+\begin{equation}
+	B=\frac{8\mu_0NI_c}{5r\sqrt{5}} \label{e:Helmholtz_field}
+\end{equation}
+
+\noindent where $\mu_0=4\pi\times10^{-7} \frac{T\cdot m}{A}$, $I_c$ is the current in the coil, N is the number of turns in the coil, and r is the radii of the coil. Values for the coil's constants are discussed in the following section. To alter the electron trajectory, $I_c$ can be changed to influence the magnetic field $B$, or different voltage values can be applied.
+
+Combining the simplified expression from Equation \ref{e:N2L_e_over_m} with Equation \ref{e:Helmholtz_field}, $B$ can be eliminated from the expression yielding
+
+\begin{equation}
+	\frac{e}{m}=\frac{2V}{\paren{\frac{8\mu_0N}{5r\sqrt{5}}}^2I_c^2R^2} \label{e:em_full_expr}
+\end{equation}
+
+\noindent This equation can be used to show the dependence of $R$ on either $I_c$ or $V$, both of which will be analyzed in this paper.
+
+Due to the nature of voltage and amps, and how they relate to the electrons, we expect to see the beam's radius decrease with increased current at a constant voltage, and the beam's radius increase with increased voltage at a constant current. This is because the radius of the electron beam is dependent on the velocity of the electrons, which can be increased by increasing the energy, or potential difference (Volts).
+
+\subsection{Dependence on Current}
+
+Performing basic algebraic manipulations and defining a proportionality constant $\alpha$, the dependence on the coil current is given by the inverse of the electron beam's radius
+
+\begin{equation}
+	\frac{1}{R}=\alpha\cdot I_c \label{e:FixV_dep}
+\end{equation}
+
+\noindent where $\alpha$ is given by
+
+\begin{equation}
+	\alpha = \frac{8\mu_0N}{5r}\sqrt{\frac{e/m}{10V}} \label{e:FixV_alpha}
+\end{equation}
+
+\noindent It should be noted that here, voltage $V$ is constant, or Fixed. Also, $\frac{e}{m}$ is being treated as a constant as well, so that future analysis and regressions can lead to calculating $\frac{e}{m}$ using $\alpha$. Due to residual fields interfering with the $B$-field of the Helmholtz coil, an intercept term $A$ is added to Equation \ref{e:FixV_dep}. In theory, this $A$ value should be equal to 0, but the equipment used is not perfect and thus interference is more than likely. The resulting equation represents a straight line with $\frac{1}{R}$ as the dependent variable, $I_c$ as the independent variable, and $\alpha$ as the slope:
+
+\begin{equation}
+	\frac{1}{R}=\alpha I_c + A \label{e:FixV_linear}
+\end{equation}
+
+\subsection{Dependence on Voltage}
+
+Conversely, the dependence of $R$, with proportionality constant $\beta$, on the beam voltage can be derived using basic algebraic manipulations as
+
+\begin{equation}
+	R=\beta\cdot\sqrt{V} \label{e:FixA_dep}
+\end{equation}
+
+\noindent where $\beta$ is given by
+
+\begin{equation}
+	\beta=\frac{5r}{8\mu_0NI_c}\sqrt{\frac{10}{\frac{e}{m}}} \label{e:FixA_beta}
+\end{equation}
+
+\noindent Similarly, it should be noted that $I_c$ is constant, or fixed, and that $\frac{e}{m}$ is treated as a constant to allow for future analysis through regressions. As done in the fixed voltage model, an intercept $B$ is added to Equation \ref{e:FixA_dep}. In theory, this $B$ value should also be equal to 0, but the equipment used is not perfect and thus interference and inconsistencies in instruments are more than likely. The resulting equation represents a straight line with $R$ as the dependent variable, $\sqrt{V}$ as the independent variable, and $\beta$ as the slope:
+
+\begin{equation}
+	R=\beta\cdot\sqrt{V}+\beta \label{e:FixA_linear}
+\end{equation}
 
 % Procedure
 \section{Experimental Procedure}
-\lipsum[3]
+Despite varying different aspects of our experiment in the two parts (Voltage and Current), the apparatus used remained the same throughout. Figure \ref{f:EOM_Apparatus} shows the apparatus which is based on a commercial apparatus containing vacuum tube with an electron gun and a small about of helium gas, roughly $10^{-5}$ atmospheres~(\ref{ref:MANUEL}). This tube is designed for measuring the electron's charge to mass ratio $\frac{e}{m}$, and is mounted on a Uchida Chassis. The chassis supports the Helmholtz coils for controlling the magnetic field. The Helmholtz coils also have a centimeter ruler mounted on its backside which will be used to make measurements. The current required to operate the Helmholtz current comes from the Elecno power supply shown on the left side of Figure \ref{f:EOM_Apparatus}. This power supply is old and inconsistent, and thus an Ammeter is used to accurately read the current supplied. This is necessary as the Helmholtz coils will be burnt out if the current exceeds 2.0A. The electric potential, or voltage, required to operate the electron gun is provided by the Pasco power supply on the right side of Figure \ref{f:EOM_Apparatus}. This device is relatively accurate (relative to future measurements and calculations), and thus errors in 'meters' reading will not be recorded or mentioned again in this report. Similar to the current limit to protect the Helmholtz coils, the voltage supplied should never exceed 12V. For all voltage adjustments, one should use the '500V' knob, being careful not to make sudden large adjustments in the supplied voltage. To ensure the equipment works properly, we first set our current to 1A and the voltage to 100V. With the lights turned off, we were then able to observe a glowing green ring in the bulb mounted inside the coils. To ensure proper readings in the two upcoming experiments, we then rotated the tube very slightly so that the green ring (the electron trajectories) were circular instead of forming spirals. Once we had aligned the green ring to form a circle, we powered down the power supplies to prepare for the first experiment.
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/EOM_Apparatus.png}
+    \caption{Experimental Apparatus}
+    \label{f:EOM_Apparatus}
+\end{wrapfigure}
+
+While adjustments in current/voltage will be discussed in the following subsections, the measurement technique for the electron beam is consistent. When observing the electron beam, the lights in the room must be turned off and you must be aligned with the beam. To eliminate parallax, or the error perceived when viewing two points at an angle~(\ref{ref:MANUEL}), we had to visually align each side of the electron's path with its reflection. To do this, we moved our head back and forth until the reflection of the beam in the mirror mounted at the back of the Helmholtz coils was obscured by the beam itself. At this point each of us would take a measurement, and record it individually in our table. The measured value is the diameter across the entire electron beam. This is because it gives us an easy place to start an end our measurements while providing a convenient way to yield the desired beam radius. We reported our measurements to $0.1 cm$ error, which we believe is representative of the accuracy that can be observed through the apparatus. We would only compare values after both of us took a reading, to prevent collusion. To utilize our data most effectively, we took the average of our measurements. It should be noted that models for this experiment's analysis require data in meters, and thus our average measurements were converted to meters before the final calculation. These values can be seen in Tables \ref{t:FixV} and \ref{t:FixA} on the first two pages of the Appendix.
+
+
+\subsection{Dependence on Current}
+To take measurements and determine the dependence of Current on the beam's radius, we first fixed the Voltage at a value of $104\pm1V$. Then, we found a minimum and maximum current where the beam could be observed. The minimum current corresponded to a value of 0.66A, while the maximum current corresponded to a value of 1.91A. We noted the beam diameter of these current values before proceeding. As expected, the minimum current corresponded to the maximum beam radius, and the maximum current corresponded to the minimum beam size. We then divided the difference of these two extremes by 4 to get a suitable step size of 0.31A, which we then used to record values at 3 intermediate values of current. Such values are reported in Table \ref{t:FixV}. We chose to ignore uncertainties in the error of the varied current, as this experiment assumes current to be a dependent variable whose errors would not be used in a meaningful way in determining $\frac{e}{m}$.
+
+\subsection{Dependence on Voltage}
+To take measurements and determine the dependence of Voltage on the beam's radius, we first fixed the current at a value of $1.02\pm0.01A$. Then, we found a minimum and maximum voltage where the beam could be observed. The minimum voltage corresponded to a value of 84V, while the maximum current corresponded to a value of 197V. We noted the beam diameter of these voltage values before proceeding. As theorized, the minimum voltage corresponded to the minimum beam size, and the maximum voltage corresponded to the maximum beam size. We then divided the difference of these two extremes by 4 to get a suitable step size of 28V, which we then used to record values at 3 intermediate values of voltage. Such values are reported in Table \ref{t:FixA}. We chose to ignore uncertainties in the error of the varied voltage, as this experiment assumes voltage to be a dependent variable whose errors would not be used in a meaningful way in determining $\frac{e}{m}$.
 
 % Results and Analysis
 \section{Results and Analysis}
@@ -76,6 +167,7 @@ I would like to thank Pratham Bhashyakarla, CWRU Department of Physics, for his 
 \subsection{References}
 \begin{enumerate}
     \item Driscoll, D., General Physics II: E$\&$M Lab Manual, “Charge to Mass Ratio of the Electron,” CWRU Bookstore, 2016.
+    \label{ref:MANUEL}
 \end{enumerate}
 
 \clearpage
@@ -192,7 +284,7 @@ This expression was used in determining the errors presented in Table \ref{t:Fix
 
 \clearpage
 
-\subsection{Hemholtz Coil Current Error Propagation - Fixed Voltage} \label{sec:FixedVoltageErr}
+\subsection{Error Propagation in Dependence on Current} \label{sec:FixedVoltageErr}
 
 \begin{equation}
 	\alpha = \frac{8\mu_0N}{5r}\sqrt{\frac{e/m}{10V}}\
@@ -237,7 +329,7 @@ Calculate the error in $\frac{e}{m}$ due to $r$ as:
 
 \clearpage
 
-\subsection{Beam Voltage Error Propagation - Fixed Amps} \label{sec:FixedAmpsErr}
+\subsection{Error Propagation in Dependence on Voltage} \label{sec:FixedAmpsErr}
 
 \begin{align}
 	\beta = \frac{5r}{8\mu_0N I_c}\sqrt{\frac{10}{e/m}}
