@@ -17,6 +17,7 @@
 \usepackage{subfigure}
 \usepackage{lipsum}
 \usepackage{caption}
+\usepackage{pdfpages}
 \usepackage{subcaption}
 \usepackage{booktabs}
 
@@ -41,6 +42,8 @@ Cleveland, OH 44016-7079}
 
 % Actual Lab content
 \begin{document}
+\includepdf[pages=1]{LCR_Report-Cover.pdf}
+
 \pagestyle{fancy}
 \fancyhf{}
 
@@ -56,45 +59,182 @@ Cleveland, OH 44016-7079}
 
 % Abstract section of Report
 \section{Abstract}
-\lipsum[1]
+I have tested the angular frequency for forced and unforced damped LCR circuits using  Lorentzian models and Origin $\&$ Logger Pro software. Using Logger Pro and various capacitor-resistor setups, I have measured the angular frequency, time constant, and damping coefficient for 6 different setups. While including numerical values for these 6 trails would be inefficient in this section, all of the data collected aligned with the theoretical values predicted. This experiment shows that measurements made in the lab are consistent with the laws of physical space. Only a handful of these values did not align within their errors, but they are minor enough that it is safe to assume repeats of the experiment would yield 'correct' results. Using Origin, a digital oscilloscope, and a function generator, I have measured the resonant angular frequency and charge stored in a capacitor in a forced LCR circuit. We found a resonant angular frequency of $\omega_R=50907\pm213.6 \frac{1}{s}$, and $Q_{real}=2.98\pm0.07$. This value for $\omega_R$ aligned perfectly within both its error bars and the theoretical error bars, supporting this finding. The value for $Q$ did not, align within its error bars, and this is most likely due to nuisance variables, environmental factors, systematic errors, or even mishandled theory. While systematic errors were not heavily present in the following experiments, they did plague the final $Q$ value, and hence we cannot claim that the theory behind $Q$ is correct with a strogn degree of certainty.
 
 % Introduction and Thoery
 \section{Introduction and Theory}
-\lipsum[1]
+\subsection{Damped Oscillator}
+An inductor is typically a coil tightly wound into a toroid or solenoid. It can thus store energy in its magnetic field. This behavior is governed by Faraday's Law of Induction, which allows us to show that EMF's across an inductor is influenced by the current flowing through it.  
 
+In an unforced LCR circuit, the amount of charge stored in the capacitor is described by the second order linear forced differential equation
+\begin{equation}
+	L\frac{d^2Q}{dt^2}+R\frac{dQ}{dt}+\frac{Q}{C}=0 \label{eq:diffeq_unforced}
+\end{equation}
+
+This is directly analogous to the mechanical equivalent of an oscillator, where the mass is replaced by the inductance $L$, the resistance $R$ replaces the damping coefficient, and the spring constant term is replaced by $\frac{1}{C}$.
+
+Using principles of differential equations, we find the solution of Equation \ref{eq:diffeq_unforced} is
+\begin{equation}
+	Q=Q_oe^{-(t/\tau)}\sin\paren{\omega'+\phi} \label{eq:diffeq_unforced_solved}
+\end{equation}
+where
+\begin{equation}
+	\omega'=\sqrt{\omega^2-\frac{1}{\tau^2}}=\sqrt{\frac{1}{LC}-\paren{\frac{R}{2L}}^2}
+\end{equation}
+where the parameters
+\begin{enumerate}
+	\item $Q_o$ is the charge at $t=0$ assuming a phase angle $\phi=\frac{pi}{2}$
+	\item $\tau=\frac{2L}{R}$ is the decay time for the exponential term to decrease by $1/e$.
+	\item $\omega^2=\frac{1}{LC}$ where $\omega$ is given as the resonant frequency of the undamped circuit. With damping, $\omega'$ is used.
+\end{enumerate}
+
+To determine the voltage across the capacitor as opposed to the charge across it, we can use the relationship $Q=CV_C$. As capacitance $C$ is a constant, we can substitute this expression into Equation \ref{eq:diffeq_unforced_solved} and yield
+\begin{equation}
+	V_R=V_oe^{-(t/\tau)}\sin\paren{\omega'+\phi}. \label{eq:diffeq_unforced_solved_with_V}
+\end{equation}
+
+To classify harmonic systems like this one, we can use the damping ratio $\xi$, defined
+\begin{equation}
+	\xi=\frac{R}{2}\sqrt{\frac{C}{L}}.\label{eq:xi_non_app}
+\end{equation}
+Here, if $\xi<1$, it is underdamped, if $\xi=1$, it is critically damped, and if $\xi>1$, it is overdamped, as defined in the lab manual (\ref{ref:MANUEL}).
+
+\subsection{Resonant Circuit (Forced Oscillator)}
+An electric oscillator, like any oscillator, has its own resonant frequency given by:
+\begin{equation}
+	\omega_R=\sqrt{\frac{1}{LC}}. \label{eq:omega_R_base}
+\end{equation}
+
+A periodic driving force $\omega$ from say, a function generator, will cause changes in observed voltage amplitude. If the driving force is equal to the system's resonant frequency, then the observed amplitude will be at its maximum. If the driving force is any other value, then the system will show reduced amplitude.
+
+In a forced LCR circuit, the amount of charge stored in the capacitor is described by the second order linear forced differential equation
+\begin{equation}
+	L\frac{d^2Q}{dt^2}+R\frac{dQ}{dt}+\frac{Q}{C}=E_m\cos\omega t \label{eq:diffeq_forced}
+\end{equation}
+where $\omega$ is the angular frequency of the driving oscillator, given by $\omega=2\pi f$.
+
+Using principles of differential equations, and using the relationship $I=\frac{dQ}{ft}$, we find the solution of Equation \ref{eq:diffeq_forced} is
+\begin{equation}
+	I=I_m\cos\paren{\omega t + \phi} \label{eq:diffeq_forced_solved}
+\end{equation}
+where $I_m$ is the current's amplitude and $\phi$ is the phase of the system. It should be noted that the current oscillates with the frequency of the function generator (driving force), and not the resonant frequency of the circuit itself.
+
+The amplitude of the current $I_m$ is given by the expression
+\begin{equation}
+	I_m=\frac{V_m}{D} \label{eq:current_amp}
+\end{equation}
+where $D$ is given by
+\begin{equation}
+	D=\sqrt{\paren{\omega L-\frac{1}{\omega C}}^2+R^2} \label{eq:D}
+\end{equation}
+where $L$ is the inductance, $C$ is the capacitance, and $R$ is the resistance. From this expression, it is clear that $I_m$ is at its maximum when $D$ is at its minimum. This occurs when the driving force's frequency is equal to the resonant frequency of the system, which can be shown by
+\begin{equation}
+	\omega L = \frac{1}{\omega C} \qquad \rightarrow \qquad \omega=\sqrt{\frac{1}{LC}}=\omega_R \label{eq:maximum_current_amp}
+\end{equation}
+
+Using Ohm's law, we can find that the voltage at the resonant frequency $V_R$ is given by $V_R=I * R_R$. Here, $R=R_R$, so the distinction is not needed. We can use this relationship in combination with Equations \ref{eq:current_amp} and \ref{eq:D} to compute the gain voltage across the resistor, which is given by the ratio $V_R/V_m$, where $V_m$ is the input voltage from the driving force or function generator. The gain is thus given by
+\begin{equation}
+	\frac{V_R}{V_m}=\frac{R}{\sqrt{R^2+\paren{\omega L - \frac{1}{\omega C}}^2}}. \label{eq:Gain}
+\end{equation}
+
+A plot of Equation \ref{eq:Gain} where $\frac{V_R}{V_m}$, or Gain, is the independent Variable and $\omega$ is the dependent variable is called a resonance curve. 
+
+The quality factor $Q$ of a resonant circuit can be expressed both by the system's resonant frequency or qualities of the circuit as
+\begin{equation}
+	Q=\frac{\omega_R L}{R}=\frac{1}{R}\sqrt{\frac{L}{C}}\label{eq:Q_expressions}
+\end{equation}
 % Procedure
 \section{Experimental Procedure}
+To construct the LCR circuits for this lab, we used a Pasco board using a $80-100mH$ inductor. Using an LC Meter, we measured the inductance, $L$, of said inductor to be $86.6\pm0.1mH$, as reported in Table \ref{tab:other_measured_values}. We also used 3 different capacitors in this lab, which we measured an LC Meter as well. For the $0.022\mu F$ capacitor ($C_1$ in Table \ref{tab:other_measured_values}), we measured a capacitance of $0.022\pm0.001\mu F$ using an LC Meter. For the $0.47\mu F$ capacitor ($C_2$ in Table \ref{tab:other_measured_values}), we measured a capacitance of $0.47\pm0.01\mu F$ using an LC Meter. For the $0.0047\mu F$ capacitor ($C_3$ in Table \ref{tab:other_measured_values}), we measured a capacitance of $0.0045\pm0.0001\mu F$ using an LC Meter. As noted, these values are reported in Table \ref{tab:other_measured_values}, but have been converted to their standard units (i.e $mH\to H$).
+
+Also, we used a total of 5 different resistance measurements/values in this lab. Using a DMM, we measured the resistance of the inductor ($R_{ind}$ in Table \ref{tab:resistance_values}) to be $188.8\pm0.1\Omega$. For the $100\Omega$ resistor ($R_1$ in Table \ref{tab:resistance_values}), we measured a resistance of $99.1\pm0.1\Omega$. For the first $1000\Omega$ resistor ($R_2$ in Table \ref{tab:resistance_values}), we measured a resistance of $990.\pm10.\Omega$. For the second $1000\Omega$ resistor ($R_2$ in Table \ref{tab:resistance_values}), we measured a resistance of $980.\pm10.\Omega$. As for the 5th value, we read the marked resistance of the function generator to be $50\Omega$. This value does not have any associated error, as it is a property explicitly stated by the manufacturers.
+
+For all of the above values, the error in these measurements is due to the uncertainty in the provided DMMs unless otherwise noted.
+
 \subsection{Damped Oscillator}
-\lipsum[1]
+To conduct the damped oscillator section of this experiment, we first constructed the circuit seen in Figure \ref{fig:LCR_Apparatus_1}. To ensure that readings using Logger Pro were easy to make and that the trigger was consistently hit, we used both batteries as shown. For the first trial, we used a wire in place of the resistor, and capacitor $C_1$. Although there is no actual resistor here, it is important to make use of the resistance of the inductor in any calculations for this and all future trials. To ensure that we set up the circuit properly, we charged the capacitor by pressing $S_1$, and then briefly connected the DMM to the circuit to verify that the capacitor charges to a value near the voltage of the batteries (3V total). After verifying that the capacitor worked correctly, we were sure to disconnect the DMM from the circuit as the capacitor will discharge through it otherwise.
 
 \begin{wrapfigure}{r}{0.5\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/images/LCR_Apparatus_1.png}
-    \caption{Experimental Apparatus of Damped Oscillator section from the LCR Lab Manual \ref{ref:MANUEL}}
+    \caption{Experimental Apparatus of Damped Oscillator section from the LCR Manual \ref{ref:MANUEL}}
     \label{fig:LCR_Apparatus_1}
 \end{wrapfigure}
 
-\lipsum[1]
+We then conducted 6 trials of this experiment using Logger Pro. To make Logger Pro work properly and make use of its Analysis/Fitting software, we configured a fit equation equal to Equation \ref{eq:diffeq_unforced_solved_with_V}, where we fit the initial voltage $V_o=A$, the time constant $\tau=L$, the angular frequency $\omega=W$, and the phase angle $\phi=P$. This equation was inputted into Logger Pro and will be used for the remaining explanation of this experiment.
+
+To collect data for the first trial, we connected the logger pro probes to the red and black terminals shown in Figure \ref{fig:LCR_Apparatus_1}. As we are using both batteries, we set the trigger for Logger Pro to $2.4V$ to allow for easy and automatic data collection. In this first trial, we used capacitor $C_1$, and no resistor. This put the total resistance equal to just the resistance of the inductor. We then reset Logger Pro's collection by pressing the 'Collect' button, and then pressed $S_1$ followed by $S_2$ to charge and then discharge the capacitor.  A plot then appeared after a brief moment, and we were able to fit a non linear curve to it as described earlier. Using the fitting software, we found values for $A, L, W, P$ and reported them in Table \ref{tab:damped_trial_1}. We then saved an image of this plot as Figure \ref{fig:D1_022C_0R}.
+
+To collect data for the second trial, we replaced the capacitor with a higher rated one, $C_2$. This capacitor will remain the same for the remainder of these trials. We did not change the resistance for this trial. After collecting the data and fitting a curve to it, we reported the constants in Table \ref{tab:damped_trial_2} and saved an image of this plot as Figure \ref{fig:D2_47C_0R}.
+
+To collect data for the third trial, we replaced the resistor with a higher rated one, $R_1$. As there is still an inductor in the circuit, the total resistance and its error were first found by adding the values in series, as reported in Equation \ref{eq:100R_w_Inductor}. After collecting the data and fitting a curve to it, we reported the constants in Table \ref{tab:damped_trial_3} and saved an image of this plot as Figure \ref{fig:D3_47C_100R}.
+
+To collect data for the fourth trial, we replaced the resistor with two higher rated ones in parallel, $R_2$ and $R_3$. As there is still an inductor in the circuit, the total resistance and its error were first found by adding the value of the parallel resistor and the inductor's resistance in series, as reported in Equation \ref{eq:500R_w_Inductor}. After collecting the data and fitting a curve to it, we reported the constants in Table \ref{tab:damped_trial_4} and saved an image of this plot as Figure \ref{fig:D4_47C_500R}.
+
+To collect data for the fifth trial, we replaced the resistor with a higher rated one, $R_2$ alone. As there is still an inductor in the circuit, the total resistance and its error were first found by adding the value of the parallel resistor and the inductor's resistance in series, as reported in Equation \ref{eq:1000R_w_Inductor}. After collecting the data and fitting a curve to it, we reported the constants in Table \ref{tab:damped_trial_5} and saved an image of this plot as Figure \ref{fig:D5_47C_1000R}.
+
+To collect data for the fourth trial, we replaced the resistor with two higher rated ones in series, $R_2$ and $R_3$. As there is still an inductor in the circuit, the total resistance and its error were first found by adding the value of the resistances in series as shown in Equation \ref{eq:2000R_w_Inductor}. After collecting the data and fitting a curve to it, we reported the constants in Table \ref{tab:damped_trial_6} and saved an image of this plot as Figure \ref{fig:D6_47C_2000R}.
+
+It should be noted that Logger Pro is an 'archaic' program and its fitting and triggering software and hardware is not state-of-the-art. It is because of this that the trigger point had to be adjusted until landing on the safe $2.4V$ limit mentioned earlier. Also, the fitting software is incredibly inconsistent, and requires multiple (sometimes 10 or more) manual attempts (continually pressing 'Try Fit') to converse on a good fit.
+
+Using this data, we then classified the nature of the harmonic oscillators using Equation \ref{eq:xi_non_app}. We also used the properties of the circuit to calculate the theoretical $\omega'$ and $\tau$ values which will explained more in the next section.
 
 \subsection{Resonant Circuit}
-\lipsum[1]
+To conduct the resonant circuit section of this experiment, we first constructed the circuit seen in Figure \ref{fig:LCR_Apparatus_2}. This circuit uses the same inductor as in the previous subsection, but uses a single $1k\Omega$ resistor ($R_2$) and a $0.0047\mu F$ capacitor ($C_3$). The circuit is driven by a function generator and the outputted signals are read by a Digital Oscilloscope (DSO). Here, the resistor, capacitor, and inductor are all wired in series with the function generator. This means that the total resistance can be found in two different ways. One way neglects the effect of the function generators resistance, which is given as $R_{gen}=50\Omega$. The other way is to involve this resistance in series and use the total equivalent value in all calculations. In either case, the resistance of the inductor should not be ignored. The results of these calculations are discussed in the net section.
 
 \begin{wrapfigure}{r}{0.5\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figures/images/LCR_Apparatus_2.png}
-    \caption{Experimental Apparatus of Resonant Circuit section from the LCR Lab Manual \ref{ref:MANUEL}}
+    \caption{Experimental Apparatus of Resonant Circuit section from the LCR Manual \ref{ref:MANUEL}}
     \label{fig:LCR_Apparatus_2}
 \end{wrapfigure}
 
-\lipsum[1]
+To finish setting up the function generator and DSO, we connected the Ch2 output of the function generator to the circuit and connected the DSO probes channel 1 knob. This is because the channel 2 output gives more amplitude. We then set the function generator frequency to $10 kHz$ initially, and set the amplitude control to $16Vpp$. This voltage value will be constant throughout the experiment and can be regarded as the input voltage.
+
+With the circuit fully set up, we then moved to acquire the data necessary to make a Gain vs. $\omega$ plot. To do this, we found the maximum amplitude shown when varying the frequency to be $10.96V$ at $8 kHz$. Then, we found lower and upper bounds that were at $10\%$ of this frequency. After finding these bounds, we took about 20 different coordinate pairs in between them to establish a resonant curve. We recorded these values into Table \ref{tab:gain_freq} and plotted the Gain (voltage measured divided by input voltage) against the frequency (converted to Hz for dimension homogeneity). This was plotted in Figure \ref{fig:origin}, concluding the experimental procedure for this lab.
 
 % Results and Analysis
 \section{Results and Analysis}
-\lipsum[1]
+To assist in organization and ease of understanding, all major error analysis and calculations for the Damped Oscillator section is explained in Appendix \ref{sec:Damped_Osillator}. Similarly, all of the major error analysis and calculations for the Resonant Circuit section can be found in Appendix \ref{sec:Resonant_Circuit}. In either case, the calculations were done using a python script, which is attached to the end of this document for your convenience in Appendix \ref{sec:Python_Code}.
+
+\subsection{Damped Oscillator}
+For the following data, we expect a severe dropoff in $\omega'$ values between Trials 1 and 2 as there is no resistor change present. We also expect there to be a smaller change between Trials 2 and 3 due to the resistance changing slightly, but capacitance being held constant. Finally, it is expected that there will be a slightly more visual drop in $\omega'$ values from Trial 3 to 4, due to the larger increase in resistance.
+
+For trial one, we calculated $\omega'=22884.3\pm521.4\frac{1}{s}$ as shown in Equation \ref{num:omega_prime_trial_one}. Using logger pro, we found that $\omega'=22980\pm22\frac{1}{s}$, as reported in Table \ref{tab:damped_trial_1}. Comparing these two values and taking the predicted error into account, we can see that the values agree within their errors. We also calculated $\tau=0.000917\pm1.2*10^{-6} s$ as shown in Equation \ref{num:tau_trial_one}. Using logger pro, we found that $\tau=0.0008\pm2*10^{-5} s$. These values do not agree within their errors. Finally, we found the damping factor was $\xi=0.048\pm0.001$ as shown in Equation \ref{num:xi_trial_one}. As this value is less than 1, it is clear that the system in underdamped in this state. This explains the very prominent oscillations in Figure \ref{fig:D1_022C_0R}.
+
+For trial two, we calculated $\omega'=4782.1\pm52.5\frac{1}{s}$ as shown in Equation \ref{num:omega_prime_trial_two}. Using logger pro, we found that $\omega'=4912\pm5\frac{1}{s}$, as reported in Table \ref{tab:damped_trial_2}. Comparing these two values and taking the predicted error into account, we can see that the values do not agree within their errors. We also calculated $\tau=0.000917\pm1.2*10^{-6} s$ as shown in Equation \ref{num:tau_trial_two}. This value did not change, and that is expected as we did not change resistance, and inductance is constant. Using logger pro, however, we found that $\tau=0.0009\pm5*10^{-6} s$. These values do agree within their errors, but $\tau$ does not match the previous value, indicating some sort of systematic error or variability in the experiment. Finally, we found the damping factor was $\xi=0.222\pm0.002$ as shown in Equation \ref{num:xi_trial_two}. As this value is less than 1, it is clear that the system in underdamped in this state. It should be noted that the value for $\omega'$ here aligns with the expected behavior despite not agreeing within predicted errors.
+
+For trial three, we calculated $\omega'=4614.5\pm54.4\frac{1}{s}$ as shown in Equation \ref{num:omega_prime_trial_three}. Using logger pro, we found that $\omega'=4724\pm1\frac{1}{s}$, as reported in Table \ref{tab:damped_trial_3}. Comparing these two values and taking the predicted error into account, we can see that the values do not agree within their errors. We also calculated $\tau=0.000602\pm7.5*10^{-7} s$ as shown in Equation \ref{num:tau_trial_three}. Using logger pro, we found that $\tau=0.0006\pm5*10^{-7} s$. These values agree within their errors. Finally, we found the damping factor was $\xi=0.339\pm0.004$ as shown in Equation \ref{num:xi_trial_three}. As this value is less than 1, it is clear that the system in underdamped in this state. This explains the oscillations in Figure \ref{fig:D3_47C_100R}, and also explains why the circuit reaches steady state more quickly than in the first two trials.
+
+For trial four, we calculated $\omega'=2929.8\pm89.7\frac{1}{s}$ as shown in Equation \ref{num:omega_prime_trial_four}. Using logger pro, we found that $\omega'=-2829\pm3\frac{1}{s}$, as reported in Table \ref{tab:damped_trial_4}. Comparing these two values by ignoring the negative sign and taking the predicted error into account, we can see that the values agree almost perfectly within their errors. We also calculated $\tau=0.00025\pm1.3*10^{-6} s$ as shown in Equation \ref{num:tau_trial_four}. Using logger pro, we found that $\tau=0.00024\pm1.6*10^{-6} s$. These values agree within their errors. Finally, we found the damping factor was $\xi=0.802\pm0.009$ as shown in Equation \ref{num:xi_trial_four}. As this value is less than 1, it is mostly clear that the system in underdamped in this state. This explains the oscillations in Figure \ref{fig:D4_47C_500R}, and also explains why the circuit reaches steady state more quickly than in the first three trials.
+
+For trial five, we calculated $\tau=0.000147\pm1.3*10^{-6} s$ as shown in Equation \ref{num:tau_trial_five}. Using logger pro, we found that $\tau=0.000011\pm3 s$. These values agree within their errors only because of the severe error term for the logger pro values. This term suggest an issue with the fitting model, or some other large overlooked error. Finally, we found the damping factor was $\xi=1.39\pm0.02$ as shown in Equation \ref{num:xi_trial_five}. As this value is greater than 1, it is clear that the system in overdamped in this state. This explains the lack of oscillations in Figure \ref{fig:D5_47C_1000R}.
+
+For trial six, we calculated $\\tau=0.00008\pm5.3*10^{-7} s$ as shown in Equation \ref{num:tau_trial_six}. Using logger pro, we found that $\tau=0.00008\pm0.0006 s$. These values are identical and thus agree within their errors. Finally, we found the damping factor was $\xi=2.54\pm0.03$ as shown in Equation \ref{num:xi_trial_six}. As this value is much greater than 1, it is very clear that the system in overdamped in this state. This explains the lack of oscillations in Figure \ref{fig:D6_47C_2000R}, as well as the distinctly different behavior compared to the 5 other trials and their plots.
+
+It should be clear that increasing $R$ increases the damping constant $\xi$. While increasing R decreases the values for $\omega'$ due to the mathematical relationship seen in Equation \ref{eq:omega_prime}, it does cause $\xi$ to increase. This increase in $\xi$ is supported by the mathematical relationship in Equation \ref{eq:xi_non_app}. As R plays a role in the differential equation as the damping coefficient ($b$ mechanically), it makes sense that increasing $R$ increases the value of $\xi$. 
+
+Decreasing $C$ has an inverse effect on $\omega'$ due to the mathematical relationship seen in Equation \ref{eq:omega_prime}. Decreasing $C$ also causes $\xi$ to decrease to a the directly proportional relationship seen in Equation \ref{eq:xi_non_app}. Decreasing $C$ should not have an effect on the damping time constant $\tau$, however, as $C$ does not play a role in Equation \ref{eq:tau}. This was not the case when comparing Trials 1 and 2, though. As noted above, $\tau$ did in fact change between those trials despite $L$ and $R$ being held constant. This is most likely due to some experimental variability or general systematic errors between the two trials.
+
+\subsection{Resonant Circuit}
+We calculated the theoretical value of the resonant frequency of the circuit to be $\omega_R=50656.5\pm563.6\frac{1}{s}$ as explained in Appendix \ref{sec:Resonant_Circuit}. Using Origin , we plotted the Gain vs. Frequency data as shown in Figure \ref{fig:origin} and fit Equation \ref{eq:Gain} to the data. This plot reveals a voltage amplitude $A=0.695\pm0.008$. This visually aligns with the data, which is promising. The fit also revealed the Charge $Q=-2.98\pm0.07$. We are only concerned about the magnitude of this value, and thus I will report this value to be $Q_{real}=2.98\pm0.07$. Finally, this fit revealed the resonant Frequency to be $f_R=-8102.1\pm34.0$. Again, the magnitude is all the matters here.
+
+To convert the resonant frequency to the resonant angular frequency, we can multiply it and its error by $2\pi$, according to the equation $\omega=2\pi f$. Performing this calculation, we find that the fit shows
+\begin{equation*}
+	\omega_R=50907\pm213.6 \frac{1}{s}.
+\end{equation*}
+
+Comparing this fitted/predicted value to the theory shows that the two values do in fact agree within their errors. This is most because of the large error bars on both values, but this is simply an artifact of scaling the frequency by $2\pi$ to get a useful figure. Ultimately, we can conclude that the fitted $\omega_R=50907\pm213.6 \frac{1}{s}$ aligns with theory and can be reported without fear of misrepresentation.
+
+We then calculated the charge $Q$ in two different ways. For the first calculation, seen in Expression \ref{num:Q_nofunc}, we did not include the resistance of the function generator in the theoretical value's calculation. In this case, we found that $Q=3.72\pm0.09C$. This is uncomfortably far off from the fitted value, so we then decided to account for the resistance of the function generator in the calculation. This can be seen in Expression \ref{num:Q_func} to be calculated as $Q=3.57\pm0.08C$. While this number is closer to the theoretical value, it is still significantly deviated from what theory expects. This is most likely due to systematic error in our measurement techniques, or some other resistance/inductance/capacitance that we missed in our calculations. We may also find more consistent results if collecting more and more data points, though that was outside of the scope of the lab.
+
+Ultimately, we cannot conclude that we found a suitable charge stored in the capacitor experimentally, and thus cannot confirm if theory is accurate in this scenario.
+
+Again, all pertinent derivatives used in all error calculations can be found in the Appendix, as well as the script used to make all calculations with numerical values measured in the lab.
 
 % Conclusion
 \section{Conclusion}
-\lipsum[1]
+We have measured the angular frequencies for various damped and undamped oscillating circuits using Logger Pro, Origin, and Lorentzian Models on multiple experimental datasets/points. For our experiment concerning a damped oscillator, we found that almost all predicted values using theory aligned with the experimentally determined values. Through the use of Logger Pro's trigger and fitting software, we confidently saw alignment within errors for most values, with outliers still lying within 2-3 standard deviations of the theoretical data. While this is acceptable for drawing conclusions in this format, it should be noted that more rigorous experiments should be performed to better test the physical properties of electric oscillating circuits. Removing the effect of nuisance variables and artifacts from potentially poor fitting practices would surely increase the reliability of this experiments results. Ultimately, we found that most, almost all, of our data collected in this section of this lab agreed with the theory. This is very promising, showing that electric damped oscillators obey the laws of physics even in such an imprecise environment as an undergraduate physics lab. For our experiment concerning Resonant Circuits, we found very promising results for the resonant angular frequency of the circuit, but not so much for the charge/quality of energy $Q$ for the experiment. We found a resonant angular frequency of $\omega_R=50907\pm213.6 \frac{1}{s}$ using Origin's non-linear fitting software. This aligned perfected within theory, despite large error bars. This is consistent with the theoretically measured $\omega_R=50656.5\pm563.6\frac{1}{s}$. In future experiments, tightening down on measurements and other causes of variability would strengthen our conclusions. For this experiment, we predicted $Q=3.57\pm0.08C$ based on the used electrical components, including the resistance of the function generator. Despite taking all the correct mathematical steps to arrive at this theoretical value, it still does not align with the experimentally determined $Q_{real}=2.98\pm0.07$. Ultimately, systematic errors resulted in $Q$ not being able to be reported with my confidence or certainty.
 
 \subsection{Acknowledgments}
 I would like to thank Pratham Bhashyakarla, CWRU Department of Physics, for his help in obtaining the experimental data, preparing the figures, and checking my calculations.
@@ -146,7 +286,7 @@ $-6.17 \pm 0.03$  & $0.00086 \pm 5*10^{-6}$  & $4912 \pm 5$ & $0.275 \pm 0.004$ 
 $908.0 \pm 1.3$  & $0.00058 \pm 5*10^{-7}$  & $4724 \pm 1.3$ & $-1.425 \pm 0.005$ \\
 \hline
 \end{tabular}
-\caption{Trial data generated from Logger Pro, presented in Figure \ref{fig:D3_47C_100R}. This data will be referred to as 'Trial 1's data'.}
+\caption{Trial data generated from Logger Pro, presented in Figure \ref{fig:D3_47C_100R}. This data will be referred to as 'Trial 3's data'.}
 \label{tab:damped_trial_3}
 \end{table}
 
@@ -159,7 +299,7 @@ $908.0 \pm 1.3$  & $0.00058 \pm 5*10^{-7}$  & $4724 \pm 1.3$ & $-1.425 \pm 0.005
 $7.53 \pm 0.07$  & $0.00024 \pm 2*10^{-6}$  & $-2829 \pm 3$ & $-0.337 \pm 0.002$ \\
 \hline
 \end{tabular}
-\caption{Trial data generated from Logger Pro, presented in Figure \ref{fig:D4_47C_500R}. This data will be referred to as 'Trial 1's data'.}
+\caption{Trial data generated from Logger Pro, presented in Figure \ref{fig:D4_47C_500R}. This data will be referred to as 'Trial 4's data'.}
 \label{tab:damped_trial_4}
 \end{table}
 
@@ -172,7 +312,7 @@ $7.53 \pm 0.07$  & $0.00024 \pm 2*10^{-6}$  & $-2829 \pm 3$ & $-0.337 \pm 0.002$
 $-22.5 \pm 3.0$  & $0.00011 \pm 1*10^{-6}$  & $-0.0002*10^4 \pm 3$ & $0.12 \pm 0.02$ \\
 \hline
 \end{tabular}
-\caption{Trial data generated from Logger Pro, presented in Figure \ref{fig:D5_47C_1000R}. This data will be referred to as 'Trial 1's data'.}
+\caption{Trial data generated from Logger Pro, presented in Figure \ref{fig:D5_47C_1000R}. This data will be referred to as 'Trial 5's data'.}
 \label{tab:damped_trial_5}
 \end{table}
 
@@ -185,7 +325,7 @@ $-22.5 \pm 3.0$  & $0.00011 \pm 1*10^{-6}$  & $-0.0002*10^4 \pm 3$ & $0.12 \pm 0
 $-751.9 \pm 9.6$  & $0.0007 \pm 0.0006$  & $-3.55*10^{-7} \pm 10$ & $0.0107 \pm 0.0004$ \\
 \hline
 \end{tabular}
-\caption{Trial data generated from Logger Pro, presented in Figure \ref{fig:D6_47C_2000R}. This data will be referred to as 'Trial 1's data'.}
+\caption{Trial data generated from Logger Pro, presented in Figure \ref{fig:D6_47C_2000R}. This data will be referred to as 'Trial 6's data'.}
 \label{tab:damped_trial_6}
 \end{table}
 
@@ -375,7 +515,7 @@ R_{eq}=&1228.8\pm10.0\Omega \label{eq:1000R_w_Inductor_and_Generator}
 The resistance of the function generator is given on the machine to be $50\Omega$. As a result, it is not included with error in the calculation above.
 
 \clearpage
-\subsection{Damped Oscillator}
+\subsection{Damped Oscillator} \label{sec:Damped_Osillator}
 \subsubsection{Generally Useful Expressions}
 The following derivation shows the equation and error for $\omega$, the frequency. Derivatives in this section will be taken assuming $L, C, R>0$, which is guaranteed to be true as these are physical properties that are positive by convention.
 \begin{align}
@@ -434,7 +574,7 @@ Here, we will use values $L=0.0866H$ and $\delta_L=0.0001H$ (Table \ref{tab:othe
 Here, we will use values $L=0.0866H$ and $\delta_L=0.0001H$ (Table \ref{tab:other_measured_values}), $C_2$ from Table \ref{tab:other_measured_values}, and $R_{eq}$ from Subsection \ref{subsub:500R}. Plugging these values into equations \ref{eq:omega_prime}, \ref{eq:omega_prime_error_fullexpr}, \ref{eq:tau}, \ref{eq:tau_error_fullexpr}, \ref{eq:xi}, and \ref{ep:xi_error_fullexpr} yields:
 \begin{align}
 	\omega'=2929.8\pm89.7\frac{1}{s} \label{num:omega_prime_trial_four} \\
-	\tau=0.000602\pm7.5*10^{-7} s \label{num:tau_trial_four} \\
+	\tau=0.00025\pm1.3*10^{-6} s \label{num:tau_trial_four} \\
 	\xi=0.802\pm0.009 \label{num:xi_trial_four}
 \end{align}
 
@@ -448,12 +588,12 @@ Here, we will use values $L=0.0866H$ and $\delta_L=0.0001H$ (Table \ref{tab:othe
 \subsubsection{Setup/Trial 6}
 Here, we will use values $L=0.0866H$ and $\delta_L=0.0001H$ (Table \ref{tab:other_measured_values}), $C_2$ from Table \ref{tab:other_measured_values}, and $R_{eq}$ from Subsection \ref{subsub:2000R}. Plugging these values into equations \ref{eq:tau}, \ref{eq:tau_error_fullexpr}, \ref{eq:xi}, and \ref{ep:xi_error_fullexpr} yields:
 \begin{align}
-	\tau=8.02\pm5.3*10^{-7} s \label{num:tau_trial_six} \\
+	\tau=8.02*10^{-5}\pm5.3*10^{-7} s \label{num:tau_trial_six} \\
 	\xi=2.54\pm0.03 \label{num:xi_trial_six}
 \end{align}
 
 \clearpage
-\subsection{Resonant Circuit}
+\subsection{Resonant Circuit} \label{sec:Resonant_Circuit}
 \subsubsection{Generally Useful Expressions}
 The following derivation shows the equation and error for $\omega_R$, the resonant frequency.
 \begin{align}
@@ -492,7 +632,7 @@ Plugging in $L=0.0866H$, $\delta_L=0.0001H$, $C=4.5*10^{-9}F$ $\delta_C=1*10^{-1
 \end{equation}
 
 \clearpage
-\subsection{Python Code for Calculations}
+\subsection{Python Code for Calculations} \label{sec:Python_Code}
 While the derivatives are included in their entirety in the above sub and sub-subsections, the plugging-in of numbers was omitted. This is to avoid issues with repetition and errors with overflowing line length. If you as the reader are interested in verifying the calculations above, you can copy-paste the following code and observe its output. At the bottom of the code, the output I got from running this code is shown in a multi-line string at the end of the file.
 
 \begin{verbatim}
